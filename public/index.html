@@ -4,24 +4,35 @@
     <meta charset="utf-8">
     <title>jQuery Ajax Basic</title>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        $.getJSON('/data.json', function(data){
+          $.each(data, function(key, value){
+            $('body').append('<h1>' + value.name + ' : ' + value.price + '</h1>');
+          });
+        });
+      });
+    </script>
+<!--
     <script>
     $(document).ready(function(){
-      $.ajax({
-        url: '/parameter',
-        type: 'GET',
-        data: {
-          name: 'test',
-          region: 'test2'
-        },
-        // success 속성은 이벤트
-        // ajax()메서드는 Ajax가 성공했을 때, 자동으로 success 이벤트 실행
-        success: function(data){
-          $('body').append(data);
-        }
+      $.get('/data.html', function(data, texStatus, jqXHR) {
+        $('body').load('/data.html');
       });
-    });
+      $.post(url, function(data, texStatus, jqXHR) { });
 
+      $.get(url, data, function(data, texStatus, jqXHR) { });
+      $.post(url, data, function(data, texStatus, jqXHR) { });
+    });
     </script>
+
+    <script>
+      $(document).ready(function(){
+        $('body').load('/data.html');
+      });
+    </script>
+  -->
   </head>
   <body>
 
