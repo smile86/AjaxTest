@@ -136,32 +136,7 @@ app.all('/parameter/:id', function(req, res){
 
   res.send('<h1>' + id + '</h1>');
 });
-/*
-app.use(function(req, res){
-  res.send('<h1>Hello Middleware</h1>');
-});
-*/
-/*
-app.use(express.logger());
-app.use(express.bodyParser());
-app.use(express.cookieParser());
-//app.use(express.session());
-//app.use(express.static('public'));
-//app.use(app.router());
-*/
 
-/*
-app.use(function(req, res, next){
-//  res.send("<h1> 안녕1? </h1>");
-  req.test = "req1";
-  res.test = "res1";
-  next();
-});
-app.use(function(req, res, next){
-  res.send(req.test + "::" + res.test);
-  console.log("second");
-});
-*/
 // web server 실행
 http.createServer(app).listen(3000, function(){
   console.log("Server Running at http://localhost/:3000");

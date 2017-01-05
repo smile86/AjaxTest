@@ -2,165 +2,28 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Data Process</title>
-
+    <title>jQuery Ajax Basic</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
-    // 과거의 explorer 까지 지원하기 위한 함수
-      function createRequest(){
-        try{
-          return  new XMLHttpRequest();
-        }catch(exception){
-            var version = [
-              'Msxml2.XMLHTTP.6.0',
-              'Msxml2.XMLHTTP.5.0',
-              'Msxml2.XMLHTTP.4.0',
-              'Msxml2.XMLHTTP.3.0',
-              'Msxml2.XMLHTTP',
-              'Microsoft.XMLHTTP'
-            ];
-            for(var i=0; i<version.length; i++){
-              try{
-                return new ActiveXObject(version[i]);
-              }catch(e){
-
-              }
-            }
+    $(document).ready(function(){
+      $.ajax({
+        url: '/parameter',
+        type: 'GET',
+        data: {
+          name: 'test',
+          region: 'test2'
+        },
+        // success 속성은 이벤트
+        // ajax()메서드는 Ajax가 성공했을 때, 자동으로 success 이벤트 실행
+        success: function(data){
+          $('body').append(data);
         }
-      }
-
-      /*
-      //XMLHttpRequest 객체 생성
-      var req = createRequest();
-      req.onreadystatechange = function(event){
-        if(req.readyState == 4){
-          if(req.status == 200){
-            // 변수 선언
-            //alert(req.responseXML);
-            var xml = req.responseXML;
-
-            // 데이터 가공
-            var names = xml.getElementsByTagName('name');
-            var prices = xml.getElementsByTagName('price');
-
-            for(var i=0; i<names.length; i++){
-              var name = names[i].childNodes[0].nodeValue;
-              var price = prices[i].childNodes[0].nodeValue;
-              document.body.innerHTML +='<h1>'+name+'</h1>';
-              document.body.innerHTML +='<h2>'+price+'</h2>';
-            }
-
-
-            //////////////////////////////////////////
-            //document.body.innerHTML += req.responseText;
-            // 데이터 가공
-            var json = eval('(' + req.responseText + ')');
-            var output = '';
-
-            for(var i=0; i<json.length; i++){
-              for(var key in json[i]){
-                output += '<h1>'+i+':'+json[i][key]+'</h1>';
-              }
-            }
-            document.body.innerHTML += output;
-            //////////////////////////////////////////
-          };
-        };
-      };
-      //var req = new XMLHttpRequest();
-      //req.open('GET', '/data.html', true);
-      //req.open('GET', '/data.json', true);
-      req.open('GET', '/data.xml', true);
-      //var preTime = new Date();
-      //Ajax 수행
-      req.send();
-      //var nowTime = new Date();
-      //alert(nowTime - preTime);
-
-      //출력
-      //document.body.innerHTML += req.responseText;
-      */
-    </script>
-
-    <script>
-      window.onload = function(){
-        document.getElementById('get').onclick = function(){
-          // Ajax 수행
-          var req = createRequest();
-          req.open('GET', '/products', false);
-          req.send();
-
-          //출력
-          document.getElementById('output').value = req.responseText;
-        };
-
-        document.getElementById('post').onclick = function(){
-          //변수 선언
-          var name = document.getElementById('name').value;
-          var price = document.getElementById('price').value;
-
-          // Ajax 수행
-          var req = createRequest();
-          req.open('POST', '/products', false);
-          req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-          req.send('name='+ name + '&price=' + price);
-
-          //출력
-          document.getElementById('output').value = req.responseText;
-        };
-
-        document.getElementById('put').onclick = function(){
-          //변수 선언
-          var name = document.getElementById('name').value;
-          var price = document.getElementById('price').value;
-
-          // Ajax 수행
-          var req = createRequest();
-          req.open('PUT', '/products/0', false);
-          req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-          req.send('name='+ name + '&price=' + price);
-
-          //출력
-          document.getElementById('output').value = req.responseText;
-        };
-        document.getElementById('delete').onclick = function(){
-          // Ajax 수행
-          var req = createRequest();
-          req.open('DELETE', '/products/0', false);          
-          req.send();
-          //출력
-          document.getElementById('output').value = req.responseText;
-        };
-      }
+      });
+    });
 
     </script>
   </head>
   <body>
-  <button id="get">GET</button>
-  <button id="post">POST</button>
-  <button id="put">PUT</button>
-  <button id="delete">DELETE</button>
-  <h1>input</h1>
-  <input id="name" />
-  <input id="price" />
-  <h1>output</h1>
-  <textarea id="output" disabled="disabled" cols="40" rows="20"></textarea>
 
-<!--
-    <form action="/products" method="get">
-      <fieldset>
-        <legend>GET</legend>
-        <input type="submit" />
-      </fieldset>
-    </form>
-
-    <form action="/products" method="post">
-      <fieldset>
-          <legend>POST</legend>
-          <input name="name" />
-          <input name="price" />
-          <input type="submit" />
-      </fieldset>
-    </form>
--->
   </body>
 </html>
